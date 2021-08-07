@@ -211,6 +211,8 @@ public class Parser {
 		s = ifStatement();
 	} else if (token.type().equals(TokenType.While)) {
 		s = whileStatement();
+	} else if (token.type().equals(TokenType.For)) {
+		s = forStatement();
 	} else if (token.type().equals(TokenType.Return)) {
 		s = returnStatement();
 		match(TokenType.Semicolon);
@@ -284,6 +286,22 @@ public class Parser {
 	Statement st = statement();
         return new Loop(test, st);  // student exercise
     }
+    
+    //New stuff
+    private ForLoop forStatement() {
+    	match(token.type());
+    	match(TokenType.LeftParen);
+    	String id = match(token.type());
+    	Assignment As1 = assignment(id);
+    	match(TokenType.Semicolon);
+    	Expression test = expression();
+    	match(TokenType.Semicolon);
+    	id = match(token.type());
+    	Assignment As2 = assignment(id);
+    	match(TokenType.RightParen);
+    	Statement st = statement();
+    		return new ForLoop(As1,test,As2, st);
+    }
 
     private Return returnStatement() {
     	match(TokenType.Return);
@@ -345,9 +363,20 @@ public class Parser {
     }
   
     private Expression addition () {
-        // Addition --> Term { AddOp Term }
-        Expression e = term();
+        // Addition --> Average { AddOp Average }
+        Expression e = average();
         while (isAddOp()) {
+            Operator op = new Operator(match(token.type()));
+            Expression term2 = average();
+            e = new Binary(op, e, term2);
+        }
+        return e;
+    }
+
+	private Expression average () {
+        // Average --> Term { AveOp Term }
+        Expression e = term();
+        while (isAverageOp()) {
             Operator op = new Operator(match(token.type()));
             Expression term2 = term();
             e = new Binary(op, e, term2);
@@ -455,6 +484,10 @@ public class Parser {
                token.type().equals(TokenType.Divide);
     }
     
+	private boolean isAverageOp( ) {
+        return token.type().equals(TokenType.Average);
+	}
+	
     private boolean isUnaryOp( ) {
         return token.type().equals(TokenType.Not) ||
                token.type().equals(TokenType.Minus);
@@ -495,7 +528,7 @@ public class Parser {
     public static void main(String args[]) {
 //        Parser parser  = new Parser(new Lexer(args[0])); //Picks the file name and feeds it to the lexer.
 //        Parser parser  = new Parser(new Lexer("hello.cpp"));
-        Parser parser  = new Parser(new Lexer("undeclaredVariable.cpp"));
+        Parser parser  = new Parser(new Lexer("test.cpp"));
         Program prog = parser.program();
         
         prog.applyTypeSystemRules();

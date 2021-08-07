@@ -20,6 +20,9 @@ public class Token {
     public static final Token mainTok = new Token(TokenType.Main, "main");
     public static final Token trueTok = new Token(TokenType.True, "true");
     public static final Token whileTok = new Token(TokenType.While, "while");
+    
+    public static final Token forTok = new Token(TokenType.For, "for");
+    
     public static final Token voidTok = new Token(TokenType.Void, "void");
     public static final Token returnTok = new Token(TokenType.Return, "return");
     public static final Token printTok = new Token(TokenType.Print, "print");
@@ -45,6 +48,8 @@ public class Token {
     public static final Token divideTok = new Token(TokenType.Divide, "/");
     public static final Token andTok = new Token(TokenType.And, "&&");
     public static final Token orTok = new Token(TokenType.Or, "||");
+    
+    public static final Token aveTok = new Token(TokenType.Average, "<>");
 
     private TokenType type;
     private String value = "";

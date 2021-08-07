@@ -90,12 +90,21 @@ class Program {
 			String then_branch = spcing + "then:\n" + inner_display(spc, spc + spcing, con_node.thenbranch);
 			String else_branch = spcing +  "else:\n " + inner_display(spc, spc + spcing, con_node.elsebranch);
 			return prefix + test + then_branch + else_branch;
+			//THIS IS WHERE YOU LEFT OFF
 		} if (node instanceof Loop) {
 			Loop l_node = (Loop) node;
 			String prefix = spcing + "Loop:\n";
 			String test = inner_display(spc, spc + spcing, l_node.test);
 			String body = inner_display(spc, spc + spcing, l_node.body); 	
 			return prefix + test + body;
+		} if (node instanceof ForLoop) {
+			ForLoop l_node = (ForLoop) node;
+			String prefix = spcing + "ForLoop:\n";
+			String as1 = inner_display(spc, spc + spcing, l_node.as1);
+			String as2 = inner_display(spc, spc + spcing, l_node.as2);
+			String test = inner_display(spc, spc + spcing, l_node.test);
+			String body = inner_display(spc, spc + spcing, l_node.body); 	
+			return prefix + as1 + test + as2 + body;
 		} if (node instanceof Functions) {
 			Functions f_node = (Functions) node;
 			String prefix = spcing + "Functions:\n";
@@ -366,10 +375,28 @@ class Loop extends Statement {
         test = t; body = b;
     }
 
+
 	boolean hasReturn() {
 		return body.hasReturn();
 	}	
     
+}
+
+//New STUFF
+class ForLoop extends Statement {
+	Assignment as1;
+	Assignment as2;
+	Expression test;
+	Statement body;
+	ForLoop (Assignment a, Expression b, Assignment c, Statement d){
+    	as1 = a;
+    	as2 = c;
+    	test = b;
+    	body = d;
+    }
+	boolean hasReturn() {
+		return body.hasReturn();
+	}	
 }
 
 class CallStatement extends Statement {
@@ -644,11 +671,12 @@ class Operator {
     final static String NE = "!=";
     final static String GT = ">";
     final static String GE = ">=";
-    // ArithmeticOp = + | - | * | /
+    // ArithmeticOp = + | - | * | / | <>
     final static String PLUS = "+";
     final static String MINUS = "-";
     final static String TIMES = "*";
     final static String DIV = "/";
+    final static String AVE = "<>";
     // UnaryOp = !    
     final static String NOT = "!";
     final static String NEG = "-NEG"; //This has been changed from "-" to "-NEG" to avoid ambiguity with MINUS
@@ -669,6 +697,7 @@ class Operator {
     final static String INT_MINUS = "INT-";
     final static String INT_TIMES = "INT*";
     final static String INT_DIV = "INT/";
+    final static String INT_AVE = "INT<>";
     // UnaryOp = !    
     final static String INT_NEG = "INT-NEG";
     // RelationalOp = < | <= | == | != | >= | >
@@ -678,11 +707,12 @@ class Operator {
     final static String FLOAT_NE = "FLOAT!=";
     final static String FLOAT_GT = "FLOAT>";
     final static String FLOAT_GE = "FLOAT>=";
-    // ArithmeticOp = + | - | * | /
+    // ArithmeticOp = + | - | * | / | <>
     final static String FLOAT_PLUS = "FLOAT+";
     final static String FLOAT_MINUS = "FLOAT-";
     final static String FLOAT_TIMES = "FLOAT*";
     final static String FLOAT_DIV = "FLOAT/";
+    final static String FLOAT_AVE = "FLOAT<>";
     // UnaryOp = !    
     final static String FLOAT_NEG = "FLOAT-NEG";
     // RelationalOp = < | <= | == | != | >= | >
@@ -720,10 +750,12 @@ class Operator {
     boolean ArithmeticOp ( ) {
         return val.equals(PLUS) || val.equals(MINUS)
             || val.equals(TIMES) || val.equals(DIV)
-            || val.equals(INT_PLUS) || val.equals(INT_MINUS)
-            || val.equals(INT_TIMES) || val.equals(INT_DIV)
+            || val.equals(AVE) || val.equals(INT_PLUS)
+            || val.equals(INT_MINUS) || val.equals(INT_TIMES)
+            || val.equals(INT_DIV) || val.equals(INT_AVE)
             || val.equals(FLOAT_PLUS) || val.equals(FLOAT_MINUS)
-            || val.equals(FLOAT_TIMES) || val.equals(FLOAT_DIV);
+            || val.equals(FLOAT_TIMES) || val.equals(FLOAT_DIV)
+            || val.equals(FLOAT_AVE);
     }
     boolean NotOp ( ) { return val.equals(NOT) ; }
     boolean NegateOp ( ) { return (val.equals(NEG) || val.equals(INT_NEG) || 

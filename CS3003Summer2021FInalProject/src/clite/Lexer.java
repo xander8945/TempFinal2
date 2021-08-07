@@ -127,8 +127,8 @@ public class Lexer {
                 return chkOpt('=', Token.assignTok,
                                    Token.eqeqTok);
 	    case '<':
-		return chkOpt('=', Token.ltTok,
-				   Token.lteqTok);
+			return chkOpt('=', '>', Token.ltTok,
+					   Token.lteqTok, Token.aveTok);
 
 	    case '>':
 		return chkOpt('=', Token.gtTok,
@@ -167,6 +167,20 @@ public class Lexer {
 	return two;
     }
 
+    //New Thing
+    private Token chkOpt(char c, char d, Token one, Token two, Token three) {
+    	ch = nextChar();
+    	if (ch == c) {
+    		ch = nextChar();
+    		return two;
+    	}
+    	if (ch == d) {
+    		ch = nextChar();
+    		return three;
+    	}
+    	return one;
+    }
+    
     private String concat(String set) {
         String r = "";
         do {
