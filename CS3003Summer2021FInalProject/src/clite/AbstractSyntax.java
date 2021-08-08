@@ -267,6 +267,7 @@ class Type {
     final static Type CHAR = new Type("char");
     final static Type FLOAT = new Type("float");
     final static Type VOID = new Type("void");
+    final static Type DOUBLE = new Type("double");
     // final static Type UNDEFINED = new Type("undef");
     
     private String id;
@@ -511,6 +512,11 @@ abstract class Value extends Expression {
         return ' ';
     }
     
+    double doubleValue ( ) {
+        assert false : "should never reach here";
+        return 0;
+    }
+    
     float floatValue ( ) {
         assert false : "should never reach here";
         return 0.0f;
@@ -525,6 +531,7 @@ abstract class Value extends Expression {
         if (type == Type.BOOL) return new BoolValue( );
         if (type == Type.CHAR) return new CharValue( );
         if (type == Type.FLOAT) return new FloatValue( );
+        if (type == Type.DOUBLE) return new DoubleValue( ); 
         throw new IllegalArgumentException("Illegal type in mkValue");
     }
 }
@@ -586,6 +593,25 @@ class CharValue extends Value {
 
     char charValue ( ) {
         assert !undef : "reference to undefined char value";
+        return value;
+    }
+
+    public String toString( ) {
+        if (undef)  return "undef";
+        return "" + value;
+    }
+
+}
+
+class DoubleValue extends Value {
+    private double value = 0;
+
+    DoubleValue ( ) { type = Type.DOUBLE; }
+
+    DoubleValue (double d) { this( ); value = d; undef = false; }
+
+    double doubleValue ( ) {
+        assert !undef : "reference to undefined double value";
         return value;
     }
 
@@ -683,6 +709,7 @@ class Operator {
     // CastOp = int | float | char
     final static String INT = "int";
     final static String FLOAT = "float";
+    final static String DOUBLE = "double";
     final static String CHAR = "char";
     // Typed Operators
     // RelationalOp = < | <= | == | != | >= | >

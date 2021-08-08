@@ -21,6 +21,8 @@ public class Token {
     public static final Token trueTok = new Token(TokenType.True, "true");
     public static final Token whileTok = new Token(TokenType.While, "while");
     
+    public static final Token doubleTok = new Token(TokenType.Double, "double");
+    
     public static final Token forTok = new Token(TokenType.For, "for");
     
     public static final Token voidTok = new Token(TokenType.Void, "void");

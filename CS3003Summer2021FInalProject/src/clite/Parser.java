@@ -185,9 +185,11 @@ public class Parser {
 		t = Type.CHAR;
 	} else if (token.type().equals(TokenType.Float)) {
 		t = Type.FLOAT;
+	} else if (token.type().equals(TokenType.Double)) {
+		t = Type.DOUBLE;
 	} else if (token.type().equals(TokenType.Void)) {
 		t = Type.VOID;
-	} else error("int | bool | float | char");
+	} else error("int | bool | float | char | double");
         // student exercise
         return t;          
     }
@@ -463,6 +465,10 @@ public class Parser {
 	} else if (token.type().equals(TokenType.IntLiteral)) {
 		int i_val = Integer.parseInt(match(token.type()));
 		val = new IntValue(i_val);
+	} else if (token.type().equals(TokenType.DoubleLiteral)) {
+		double d_val = Double.parseDouble(match(token.type()));
+		val = new DoubleValue(d_val);	
+	
 	} else if (token.type().equals(TokenType.FloatLiteral)) {
 		float f_val = Float.parseFloat(match(token.type()));
 		val = new FloatValue(f_val);
@@ -510,6 +516,7 @@ public class Parser {
             || token.type().equals(TokenType.Bool) 
             || token.type().equals(TokenType.Float)
             || token.type().equals(TokenType.Char)
+            || token.type().equals(TokenType.Double)
 	    || token.type().equals(TokenType.Void);
     }
     
@@ -517,6 +524,7 @@ public class Parser {
         return token.type().equals(TokenType.IntLiteral) ||
             isBooleanLiteral() ||
             token.type().equals(TokenType.FloatLiteral) ||
+            token.type().equals(TokenType.DoubleLiteral) || 
             token.type().equals(TokenType.CharLiteral);
     }
     
