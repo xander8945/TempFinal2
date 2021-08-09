@@ -267,7 +267,10 @@ class Type {
     final static Type CHAR = new Type("char");
     final static Type FLOAT = new Type("float");
     final static Type VOID = new Type("void");
-    final static Type DOUBLE = new Type("double");
+    
+    //edits new double type
+    final static Type DOUBLE = new Type("double"); 
+    
     // final static Type UNDEFINED = new Type("undef");
     
     private String id;
@@ -531,7 +534,9 @@ abstract class Value extends Expression {
         if (type == Type.BOOL) return new BoolValue( );
         if (type == Type.CHAR) return new CharValue( );
         if (type == Type.FLOAT) return new FloatValue( );
-        if (type == Type.DOUBLE) return new DoubleValue( ); 
+        
+        //edits makes a double value
+        if (type == Type.DOUBLE) return new DoubleValue( );
         throw new IllegalArgumentException("Illegal type in mkValue");
     }
 }
@@ -603,6 +608,7 @@ class CharValue extends Value {
 
 }
 
+//edits set char value for the double
 class DoubleValue extends Value {
     private double value = 0;
 
@@ -621,6 +627,7 @@ class DoubleValue extends Value {
     }
 
 }
+//edits contained above
 
 class FloatValue extends Value {
     private float value = 0;
@@ -709,7 +716,10 @@ class Operator {
     // CastOp = int | float | char
     final static String INT = "int";
     final static String FLOAT = "float";
-    final static String DOUBLE = "double";
+    
+    //edits for recognizing double to the corresponding token
+    final static String DOUBLE = "double"; 
+    
     final static String CHAR = "char";
     // Typed Operators
     // RelationalOp = < | <= | == | != | >= | >
@@ -742,6 +752,29 @@ class Operator {
     final static String FLOAT_AVE = "FLOAT<>";
     // UnaryOp = !    
     final static String FLOAT_NEG = "FLOAT-NEG";
+    
+    // Edits of:  RelationalOp = < | <= | == | != | >= | >
+    
+    final static String DOUBLE_LT = "DOUBLE<";
+    final static String DOUBLE_LE = "DOUBLE<=";
+    final static String DOUBLE_EQ = "DOUBLE==";
+    final static String DOUBLE_NE = "DOUBLE!=";
+    final static String DOUBLE_GT = "DOUBLE>";
+    final static String DOUBLE_GE = "DOUBLE>=";
+    
+    // Edits of:  ArithmeticOp = + | - | * | / 
+    
+    final static String DOUBLE_PLUS = "DOUBLE+";
+    final static String DOUBLE_MINUS = "DOUBLE-";
+    final static String DOUBLE_TIMES = "DOUBLE*";
+    final static String DOUBLE_DIV = "DOUBLE/";   
+    final static String Double_AVE = "DOUBLE<>";
+    
+    // Edits of: UnaryOp = !    
+    final static String DOUBLE_NEG = "DOUBLE-NEG";
+    
+    //end of edits
+    
     // RelationalOp = < | <= | == | != | >= | >
     final static String CHAR_LT = "CHAR<";
     final static String CHAR_LE = "CHAR<=";
