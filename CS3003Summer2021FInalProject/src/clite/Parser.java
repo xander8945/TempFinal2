@@ -376,7 +376,7 @@ public class Parser {
     }
 
 	private Expression average () {
-        // Average --> Term { AveOp Term }
+        // Average --> Term { <> Term }
         Expression e = term();
         while (isAverageOp()) {
             Operator op = new Operator(match(token.type()));
